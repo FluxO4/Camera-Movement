@@ -17,7 +17,6 @@ public class CameraMove2D : MonoBehaviour
     Camera MainCam;
 
     //pointer's position on screen, for the maths
-    Vector3 newPos = Vector3.zero;
     Vector3 deltaPos = Vector3.zero;
     Vector3 lastPos = Vector3.zero;
 
