@@ -87,17 +87,19 @@ public class CameraMove2D : MonoBehaviour
 
             if (deltaMagnitudeDiff < 0)
             {
-                viewSize = viewSize + MainCam.orthographicSize * deltaMagnitudeDiff / (Screen.height * 1.0f);
-                if (viewSize < zoomInLimit) { viewSize = zoomInLimit; }
-                MainCam.orthographicSize = viewSize;
+                if (MainCam.orthographic)
+                {
+                    viewSize = viewSize + MainCam.orthographicSize * deltaMagnitudeDiff / (Screen.height * 1.0f);
+                    if (viewSize < zoomInLimit) { viewSize = zoomInLimit; }
+                    MainCam.orthographicSize = viewSize;
+                }
+                else
+                {
+                    viewSize = viewSize + MainCam.fieldOfView * deltaMagnitudeDiff / (Screen.height * 1.0f);
+                    if (viewSize < zoomInLimit) { viewSize = zoomInLimit; }
+                    MainCam.fieldOfView = viewSize;
+                }
             }
-            else
-            {
-                viewSize = viewSize + MainCam.orthographicSize * deltaMagnitudeDiff / (Screen.height * 1.0f);
-                if (viewSize > zoomOutLimit) { viewSize = zoomOutLimit; }
-                MainCam.orthographicSize = viewSize;
-            }
-
 
             lastPos = Input.mousePosition;
             isZooming = true;
