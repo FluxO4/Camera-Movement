@@ -19,9 +19,10 @@ public class CameraMove3D : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        LockAndCentreCursor(true);
     }
+
+ 
 
     // Update is called once per frame
     void Update()
@@ -29,8 +30,7 @@ public class CameraMove3D : MonoBehaviour
 
         if (Input.GetKeyDown("escape"))
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            LockAndCentreCursor(false);
         }
 
 
@@ -55,6 +55,24 @@ public class CameraMove3D : MonoBehaviour
         {
             head.transform.localEulerAngles = new Vector3(head.transform.localEulerAngles.x + v * Time.deltaTime * 20, head.transform.localEulerAngles.y, head.transform.localEulerAngles.z);
         }
- 
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            LockAndCentreCursor(true);
+        }
+    }
+
+    void LockAndCentreCursor(bool yes)
+    {
+        if (yes)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }
