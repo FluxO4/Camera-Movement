@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//STILL UNDER DEVELOPMENT
 public class CameraMove2_5D : MonoBehaviour
 {
     //if true, camera doesn't get triggered when clicking down over a UI raycast target
@@ -149,23 +151,22 @@ public class CameraMove2_5D : MonoBehaviour
             lastPos = Input.mousePosition;
         }
 
-        Debug.Log(Input.mousePosition);
+        //Debug.Log(Input.mousePosition);
         if (Input.GetMouseButton(0))
-
         {
-            deltaPos = Input.mousePosition - lastPos;
             if (starteddragging)
             {
-                //int multiplier = -40;
+                deltaPos = Input.mousePosition - lastPos;
                 float a1 = viewSize * (Input.mousePosition.y / (Screen.height * 1.0f) - 0.5f);
                 float h = transform.position.y;
-                float b = -transform.eulerAngles.x;
-                float h1 = (h / Mathf.Sin(b - a1));
-
-
-                if (h1 > h * 2) h1 = h*2;
-
-                float m = 2 * pi * h1 * (viewSize * deltaPos.y / (Screen.height * 1.0f)) / 360.0f;
+                float b = transform.localEulerAngles.x;
+                float h1 = h * 2;
+                if (b - a1 > 1f)
+                {
+                    h1 = (h / Mathf.Sin((b - a1) * Mathf.Deg2Rad));
+                    if (h1 > h * 2) h1 = h * 2;
+                }
+                float m = -2 * pi * h1 * (viewSize * deltaPos.y / (Screen.height * 1.0f)) / 360.0f;
 
 
                 transform.position += Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized * m;
