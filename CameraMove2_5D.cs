@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -148,21 +149,26 @@ public class CameraMove2_5D : MonoBehaviour
             lastPos = Input.mousePosition;
         }
 
-
+        Debug.Log(Input.mousePosition);
         if (Input.GetMouseButton(0))
 
         {
             deltaPos = Input.mousePosition - lastPos;
-
             if (starteddragging)
             {
-                float multiplier = -(viewSize * 2f * 1.0f) / (Screen.height * 1.0f);
-                theta = transform.eulerAngles.y * Mathf.PI / 180;
+                //int multiplier = -40;
+                float a1 = viewSize * (Input.mousePosition.y / (Screen.height * 1.0f) - 0.5f);
+                float h = transform.position.y;
+                float b = -transform.eulerAngles.x;
+                float h1 = (h / Mathf.Sin(b - a1));
 
-                {
-                    transform.position = transform.position + new Vector3(deltaPos.y * Mathf.Sin(theta) * multiplier, 0, deltaPos.y * Mathf.Cos(theta) * multiplier);
-                    transform.position = transform.position + new Vector3(deltaPos.x * Mathf.Sin(theta + pi / 2) * multiplier, 0, deltaPos.x * Mathf.Cos(theta + pi / 2) * multiplier);
-                }
+
+                if (h1 > h * 2) h1 = h*2;
+
+                float m = 2 * pi * h1 * (viewSize * deltaPos.y / (Screen.height * 1.0f)) / 360.0f;
+
+
+                transform.position += Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized * m;
             }
             lastPos = Input.mousePosition;
         }

@@ -158,9 +158,13 @@ public class CameraMove2D : MonoBehaviour
                 float multiplier = -(viewSize * 2f * 1.0f) / (Screen.height * 1.0f);
                 theta = transform.eulerAngles.y * Mathf.PI / 180;
 
-                {
+                if(MainCam.orthographic){
                     transform.position = transform.position + new Vector3(deltaPos.y * Mathf.Sin(theta) * multiplier, 0, deltaPos.y * Mathf.Cos(theta) * multiplier);
                     transform.position = transform.position + new Vector3(deltaPos.x * Mathf.Sin(theta + pi / 2) * multiplier, 0, deltaPos.x * Mathf.Cos(theta + pi / 2) * multiplier);
+                }
+                else
+                {
+                    transform.position -= new Vector3(deltaPos.x, 0, deltaPos.y).normalized * (2 * pi * transform.position.y / 360.0f) * (viewSize * deltaPos.magnitude / (Screen.height * 1.0f));
                 }
             }
             lastPos = Input.mousePosition;
