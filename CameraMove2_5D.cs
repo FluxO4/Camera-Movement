@@ -151,7 +151,7 @@ public class CameraMove2_5D : MonoBehaviour
             lastPos = Input.mousePosition;
         }
 
-        //Debug.Log(Input.mousePosition);
+        
         if (Input.GetMouseButton(0))
         {
             if (starteddragging)
