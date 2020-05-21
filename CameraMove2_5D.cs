@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//STILL UNDER DEVELOPMENT
+//STILL UNDER DEVELOPMENT (Touch-rotation left)
 //Created by FluxO4
 
 
